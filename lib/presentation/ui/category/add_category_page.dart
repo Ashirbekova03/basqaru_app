@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:basqary/domain/api/category.dart';
 import 'package:basqary/domain/data/category/request/AddCategoryRequest.dart';
+import 'package:basqary/domain/s3/s3_uploader.dart';
+import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
+import 'package:basqary/presentation/ui/custom/widget/description_text.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
 import 'package:basqary/presentation/ui/custom/widget/message_hint.dart';
 import 'package:basqary/presentation/ui/custom/widget/primary_button.dart';
 import 'package:basqary/presentation/ui/custom/widget/primary_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AddCategoryPage extends StatefulWidget {
@@ -24,6 +30,8 @@ class _AddCategoryPage extends State<AddCategoryPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _limitController = TextEditingController();
   final TextEditingController _iconController = TextEditingController();
+  File? _imageFile;
+  String _image = "";
 
   final MaskTextInputFormatter _limitMask = MaskTextInputFormatter(
       mask: '\$#########',
@@ -32,18 +40,28 @@ class _AddCategoryPage extends State<AddCategoryPage> {
   );
 
   void _addCategory() {
-    if (_nameController.text.isNotEmpty && _limitController.text.isNotEmpty && _iconController.text.isNotEmpty) {
-      _categoryAPI.addCategory(
-          AddCategoryRequest(
-              name: _nameController.text,
-              limit: double.parse(_limitController.text.replaceAll("\$", "")),
-              imageUrl: _iconController.text
-          )
-      ).then((value) => {
-        MessageHint.showMessage("Category added"),
-        Navigator.of(context).pop()
+    if (_nameController.text.isNotEmpty && _limitController.text.isNotEmpty) {
+      S3Uploader().uploadFileToS3(_imageFile!).then((value) => {
+        _finallyCreateCategory(value)
+      }).onError((error, stackTrace) => {
+        _finallyCreateCategory("")
       });
+    } else {
+      _finallyCreateCategory("");
     }
+  }
+
+  void _finallyCreateCategory(imageUrl) {
+    _categoryAPI.addCategory(
+        AddCategoryRequest(
+            name: _nameController.text,
+            limit: double.parse(_limitController.text.replaceAll("\$", "")),
+            imageUrl: imageUrl
+        )
+    ).then((value) => {
+      MessageHint.showMessage("Category added"),
+      Navigator.of(context).pop()
+    });
   }
 
   @override
@@ -56,6 +74,17 @@ class _AddCategoryPage extends State<AddCategoryPage> {
   void dispose() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     super.dispose();
+  }
+
+  void _selectImage() async {
+    final ImagePicker _picker = ImagePicker();
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      _imageFile = File(image.path);
+      setState(() {
+        _image = image.path;
+      });
+    }
   }
 
   @override
@@ -94,12 +123,13 @@ class _AddCategoryPage extends State<AddCategoryPage> {
                   children: [
                     PrimaryTextField(
                       hint: "Category name",
+
                       controller: _nameController,
                       keyboardType: TextInputType.text,
                       action: TextInputAction.next,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                      margin: const EdgeInsets.only(top: 20),
                       child: PrimaryTextField(
                         hint: "Limit",
                         controller: _limitController,
@@ -108,12 +138,50 @@ class _AddCategoryPage extends State<AddCategoryPage> {
                         formatter: _limitMask,
                       ),
                     ),
-                    PrimaryTextField(
-                      hint: "Category image url",
-                      controller: _iconController,
-                      maxLength: 300,
-                      keyboardType: TextInputType.text,
-                      action: TextInputAction.done,
+                    Container(
+                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: InkWell(
+                        onTap: () {
+                          _selectImage();
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 50),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: AppColor.border)
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                "assets/images/upload.png",
+                                height: 40,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 11),
+                                child: const DescriptionText(
+                                    "Upload image"
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 81,
+                      height: 81,
+                      child: _image.isNotEmpty ? ClipRRect(
+                        borderRadius: BorderRadius.circular(1000),
+                        child: Image.file(
+                          File(_image),
+                          width: 81,
+                          height: 81,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ),
+                      ) : Container(),
                     ),
                   ],
                 ),

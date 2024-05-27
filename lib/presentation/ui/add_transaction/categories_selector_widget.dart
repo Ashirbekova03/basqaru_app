@@ -85,13 +85,15 @@ class _CategoriesSelectorWidget extends State<CategoriesSelectorWidget> {
                       color: _selectedCategoryId == category.id ? AppColor.primary : AppColor.primary.withOpacity(0.5),
                       shape: BoxShape.circle
                   ),
-                  child: Image.network(
-                    category.imageUrl,
-                    width: 50,
-                    height: 50,
-                    color: Colors.white,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.network(
+                      category.imageUrl,
+                      width: 70,
+                      height: 70,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
                   ),
                 ),
                 Text(

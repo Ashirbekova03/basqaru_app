@@ -7,7 +7,7 @@ class BaseAPI {
 
   static var dio = Dio(
       BaseOptions(
-          baseUrl: "http://192.168.0.11:8080/api",
+          baseUrl: "http://192.168.0.19:8080/api",
           responseType: ResponseType.plain,
           connectTimeout: const Duration(minutes: 3),
           receiveTimeout: const Duration(minutes: 3),

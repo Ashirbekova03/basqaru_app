@@ -40,9 +40,8 @@ class TransactionWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
               child: Image.network(
                 transaction.category.imageUrl,
-                width: 30,
-                height: 30,
-                color: Colors.white,
+                width: 48,
+                height: 48,
                 alignment: Alignment.center,
                 fit: BoxFit.cover,
               ),

@@ -98,16 +98,7 @@ class _LoginPage extends State<LoginPage> {
                         action: TextInputAction.done,
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      margin: const EdgeInsets.only(bottom: 13),
-                      child: ButtonText(
-                        "Forgot password?",
-                        onPressed: () {
 
-                        },
-                      ),
-                    ),
                     PrimaryButton(
                       "Sign In",
                       onPressed: () {

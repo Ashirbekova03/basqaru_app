@@ -42,9 +42,8 @@ class CategoryAnalyticsItemWidget extends StatelessWidget {
             ),
             child: Image.network(
               category.category.imageUrl,
-              width: 30,
-              height: 30,
-              color: Colors.white,
+              width: 38,
+              height: 38,
             ),
           ),
           Expanded(

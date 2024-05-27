@@ -1,14 +1,17 @@
 class PasswordChangeRequest {
 
   String password;
+  String oldPassword;
 
   PasswordChangeRequest({
-    required this.password
+    required this.password,
+    required this.oldPassword,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'password': password
+      'password': password,
+      'oldPassword': oldPassword,
     };
   }
 

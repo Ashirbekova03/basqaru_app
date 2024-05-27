@@ -23,6 +23,7 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
   final ProfileAPI _profileAPI = ProfileAPI();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confPasswordController = TextEditingController();
+  final TextEditingController _oldPasswordController = TextEditingController();
 
   void _changeProfile() {
     if (_passwordController.text.isNotEmpty && _confPasswordController.text.isNotEmpty) {
@@ -31,14 +32,21 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
       } else {
         _profileAPI.changePassword(
           PasswordChangeRequest(
-            password: _passwordController.text
+            password: _passwordController.text,
+            oldPassword: _oldPasswordController.text
           )
-        ).then((value) => {
-          MessageHint.showMessage("Saved"),
-          Navigator.of(context).pop()
-        });
+        ).then((value) => _success()).onError((response, error) => _wrongOldPassword());
       }
     }
+  }
+
+  void _success() {
+    MessageHint.showMessage("Saved");
+    Navigator.of(context).pop();
+  }
+
+  void _wrongOldPassword() {
+    MessageHint.showMessage("Wrong old password!");
   }
 
   @override
@@ -88,9 +96,17 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
                 child: Column(
                   children: [
                     PasswordTextField(
-                      hint: "Password",
-                      controller: _passwordController,
-                      action: TextInputAction.done,
+                      hint: "Old password",
+                      controller: _oldPasswordController,
+                      action: TextInputAction.next,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: PasswordTextField(
+                        hint: "Password",
+                        controller: _passwordController,
+                        action: TextInputAction.next,
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 20),

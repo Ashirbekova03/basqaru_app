@@ -16,8 +16,7 @@ class TransactionsAPI {
 
   Future<List<TransactionViewModel>> filter(PeriodFilter periodFilter) async {
     Response response = await BaseAPI.dio.get(
-      "/transaction/period",
-      data: periodFilter.toJson()
+      "/transaction/period?from=${periodFilter.from}&to=${periodFilter.to}",
     );
     List<dynamic> parsedListJson = jsonDecode(response.data);
     return List<TransactionViewModel>.from(parsedListJson.map<TransactionViewModel>((dynamic i) => TransactionViewModel.fromJson(i)));
