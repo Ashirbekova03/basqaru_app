@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
@@ -15,22 +16,15 @@ class WalletHeaderWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(width: 35),
           Expanded(
             child: HeaderText(
-              "My Wallet",
+              AppLocalizations.of(context)!.my_wallet,
               textAlign: TextAlign.center,
               style: HeaderText.defaultStyle.apply(
                   color: Colors.white
               ),
             ),
           ),
-          ButtonIcon(
-              Icons.notifications,
-              onPressed: () {
-
-              }
-          )
         ],
       ),
     );

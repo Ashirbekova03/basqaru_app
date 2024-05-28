@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:basqary/domain/api/category.dart';
 import 'package:basqary/domain/data/category/request/AddCategoryRequest.dart';
 import 'package:basqary/domain/s3/s3_uploader.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
@@ -59,7 +60,7 @@ class _AddCategoryPage extends State<AddCategoryPage> {
             imageUrl: imageUrl
         )
     ).then((value) => {
-      MessageHint.showMessage("Category added"),
+      MessageHint.showMessage(AppLocalizations.of(context)!.category_added),
       Navigator.of(context).pop()
     });
   }
@@ -89,115 +90,113 @@ class _AddCategoryPage extends State<AddCategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              height: 35,
-              margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ButtonIcon(
-                    Icons.arrow_back_ios_new_rounded,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    color: Colors.black,
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 35,
+            margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ButtonIcon(
+                  Icons.arrow_back_ios_new_rounded,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Colors.black,
+                ),
+                Expanded(
+                  child: HeaderText(
+                    AppLocalizations.of(context)!.add_category,
+                    textAlign: TextAlign.center,
                   ),
-                  const Expanded(
-                    child: HeaderText(
-                      "Add category",
-                      textAlign: TextAlign.center,
+                ),
+                Container(width: 35),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: 20),
+              child: Column(
+                children: [
+                  PrimaryTextField(
+                    hint: AppLocalizations.of(context)!.category_name,
+
+                    controller: _nameController,
+                    keyboardType: TextInputType.text,
+                    action: TextInputAction.next,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: PrimaryTextField(
+                      hint: AppLocalizations.of(context)!.limit,
+                      controller: _limitController,
+                      keyboardType: TextInputType.text,
+                      action: TextInputAction.next,
+                      formatter: _limitMask,
                     ),
                   ),
-                  Container(width: 35),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: InkWell(
+                      onTap: () {
+                        _selectImage();
+                      },
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: AppColor.border)
+                        ),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              "assets/images/upload.png",
+                              height: 40,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 11),
+                              child: DescriptionText(
+                                  AppLocalizations.of(context)!.upload
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 81,
+                    height: 81,
+                    child: _image.isNotEmpty ? ClipRRect(
+                      borderRadius: BorderRadius.circular(1000),
+                      child: Image.file(
+                        File(_image),
+                        width: 81,
+                        height: 81,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
+                    ) : Container(),
+                  ),
                 ],
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: 20),
-                child: Column(
-                  children: [
-                    PrimaryTextField(
-                      hint: "Category name",
-
-                      controller: _nameController,
-                      keyboardType: TextInputType.text,
-                      action: TextInputAction.next,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: PrimaryTextField(
-                        hint: "Limit",
-                        controller: _limitController,
-                        keyboardType: TextInputType.text,
-                        action: TextInputAction.next,
-                        formatter: _limitMask,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: InkWell(
-                        onTap: () {
-                          _selectImage();
-                        },
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: AppColor.border)
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/upload.png",
-                                height: 40,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 11),
-                                child: const DescriptionText(
-                                    "Upload image"
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 81,
-                      height: 81,
-                      child: _image.isNotEmpty ? ClipRRect(
-                        borderRadius: BorderRadius.circular(1000),
-                        child: Image.file(
-                          File(_image),
-                          width: 81,
-                          height: 81,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                        ),
-                      ) : Container(),
-                    ),
-                  ],
-                ),
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
+            child: PrimaryButton(
+              AppLocalizations.of(context)!.add_category,
+              onPressed: () {
+                _addCategory();
+              },
             ),
-            Container(
-              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
-              child: PrimaryButton(
-                "Add category",
-                onPressed: () {
-                  _addCategory();
-                },
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

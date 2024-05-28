@@ -1,5 +1,6 @@
 import 'package:basqary/domain/api/transactions.dart';
 import 'package:basqary/domain/data/transaction/request/AddTransactionRequest.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/data/CategoryViewModel.dart';
 import 'package:basqary/presentation/ui/add_transaction/add_transaction_screen_widget.dart';
 import 'package:basqary/presentation/ui/custom/widget/message_hint.dart';
@@ -32,7 +33,7 @@ class _AddTransactionPage extends State<AddTransactionPage> {
               isReceive: _isReceive
           )
       ).then((value) => {
-        MessageHint.showMessage("Transaction added"),
+        MessageHint.showMessage(AppLocalizations.of(context)!.transaction_added),
         Navigator.of(context).pop()
       });
     }
@@ -40,22 +41,20 @@ class _AddTransactionPage extends State<AddTransactionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        floatingActionButton: _getAddButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: AddTransactionScreenWidget(
-          amountController: _amountController,
-          pageContext: context,
-          onTypeChanged: (isReceive) {
-            _isReceive = isReceive;
-          },
-          onCategorySelected: (categoryId) {
-            _selectedCategoryId = categoryId;
-          },
-          children: [],
-        ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      floatingActionButton: _getAddButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: AddTransactionScreenWidget(
+        amountController: _amountController,
+        pageContext: context,
+        onTypeChanged: (isReceive) {
+          _isReceive = isReceive;
+        },
+        onCategorySelected: (categoryId) {
+          _selectedCategoryId = categoryId;
+        },
+        children: [],
       ),
     );
   }
@@ -75,7 +74,7 @@ class _AddTransactionPage extends State<AddTransactionPage> {
         ],
       ),
       child: PrimaryButton(
-        "Add transaction",
+        AppLocalizations.of(context)!.add_transactions,
         onPressed: () {
           _addTransaction();
         },

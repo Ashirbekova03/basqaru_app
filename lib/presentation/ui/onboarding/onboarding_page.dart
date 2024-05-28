@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/navigation/navigation_utils.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_text.dart';
@@ -37,66 +38,64 @@ class _OnBoardingPage extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     _carouselSize = MediaQuery.of(context).size.height - 300;
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.only(top: AppSize.topMargin, right: AppSize.horizontal),
-              child: ButtonText(
-                "Skip",
-                onPressed: () {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerRight,
+            margin: const EdgeInsets.only(top: AppSize.topMargin, right: AppSize.horizontal),
+            child: ButtonText(
+              "Skip",
+              onPressed: () {
+                _startAuthorization();
+              },
+            ),
+          ),
+          Expanded(
+            child: CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _carouselIndex = index;
+                    });
+                  },
+                  height: _carouselSize,
+                  initialPage: 0,
+                  enableInfiniteScroll: false,
+                  reverse: false,
+                  viewportFraction: 1,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  scrollDirection: Axis.horizontal,
+                ),
+                items: [
+                  _firstOnboarding(),
+                  _secondOnboarding()
+                ]
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 53, top: 10),
+            child: CarouselIndicator(
+              length: 2,
+              selected: _carouselIndex,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
+            child: PrimaryButton(
+              _carouselIndex == 1 ? AppLocalizations.of(context)!.start : AppLocalizations.of(context)!.next,
+              onPressed: () {
+                if (_carouselIndex == 1) {
                   _startAuthorization();
-                },
-              ),
+                } else {
+                  _carouselController.nextPage();
+                }
+              },
             ),
-            Expanded(
-              child: CarouselSlider(
-                  carouselController: _carouselController,
-                  options: CarouselOptions(
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _carouselIndex = index;
-                      });
-                    },
-                    height: _carouselSize,
-                    initialPage: 0,
-                    enableInfiniteScroll: false,
-                    reverse: false,
-                    viewportFraction: 1,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  items: [
-                    _firstOnboarding(),
-                    _secondOnboarding()
-                  ]
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(bottom: 53, top: 10),
-              child: CarouselIndicator(
-                length: 2,
-                selected: _carouselIndex,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
-              child: PrimaryButton(
-                _carouselIndex == 1 ? "Start" : "Next",
-                onPressed: () {
-                  if (_carouselIndex == 1) {
-                    _startAuthorization();
-                  } else {
-                    _carouselController.nextPage();
-                  }
-                },
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -113,10 +112,10 @@ class _OnBoardingPage extends State<OnBoardingPage> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 15),
-            child: const HeaderText("Welcome to Basqaru!"),
+            child: HeaderText(AppLocalizations.of(context)!.welcome),
           ),
           DescriptionText(
-            "Managing finances is the key to achieving financial stability and life goals. Our app is designed to help you master the basics of finance and take control of your money.",
+            AppLocalizations.of(context)!.welcome_text,
             textAlign: TextAlign.center,
             style: DescriptionText.defaultStyle.apply(
               color: Colors.black.withOpacity(0.7)
@@ -142,7 +141,7 @@ class _OnBoardingPage extends State<OnBoardingPage> {
             child: const HeaderText("Basqaru"),
           ),
           DescriptionText(
-            "With our app, you'll learn how to create a budget, manage expenses effectively, and increase your income. We provide simple and easy-to-use tools to help improve your financial status. Join our community and start your journey to financial independence today! Let's achieve financial well-being together!",
+            AppLocalizations.of(context)!.about,
             textAlign: TextAlign.center,
             style: DescriptionText.defaultStyle.apply(
                 color: Colors.black.withOpacity(0.7)

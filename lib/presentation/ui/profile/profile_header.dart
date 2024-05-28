@@ -1,8 +1,10 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/navigation/navigation_utils.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
+import 'package:basqary/presentation/ui/notification/notification_page.dart';
 import 'package:basqary/presentation/ui/settings/change_profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,19 +38,14 @@ class _ProfileHeaderWidget extends State<ProfileHeaderWidget> {
           ),
           Expanded(
             child: HeaderText(
-              "Analytics",
+              AppLocalizations.of(context)!.profile,
               textAlign: TextAlign.center,
               style: HeaderText.defaultStyle.apply(
                   color: Colors.white
               ),
             ),
           ),
-          ButtonIcon(
-              Icons.notifications,
-              onPressed: () {
-
-              }
-          ),
+          Container(width: 35)
         ]
       ),
     );

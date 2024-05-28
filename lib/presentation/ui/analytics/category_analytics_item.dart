@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/data/CategoryAnalyricsViewModel.dart';
 import 'package:basqary/presentation/data/CategoryViewModel.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
@@ -97,7 +98,7 @@ class CategoryAnalyticsItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Spent: ${Formatter.formatCurrency(category.spent)}",
+                  "${AppLocalizations.of(context)!.spent}: ${Formatter.formatCurrency(category.spent)}",
                   textAlign: TextAlign.end,
                   style: TextStyle(
                       color: isMore ? AppColor.sent : Colors.black,

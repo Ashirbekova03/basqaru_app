@@ -2,6 +2,7 @@ import 'package:basqary/domain/api/authorization.dart';
 import 'package:basqary/domain/api/base.dart';
 import 'package:basqary/domain/data/user/request/LoginRequest.dart';
 import 'package:basqary/domain/provider/UserProvider.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/navigation/navigation_utils.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_text.dart';
@@ -53,7 +54,7 @@ class _LoginPage extends State<LoginPage> {
   }
 
   void _onError() {
-    MessageHint.showMessage("Wrong email or password");
+    MessageHint.showMessage(AppLocalizations.of(context)!.wrong_old_password);
     setState(() {
       _emailController.text = "";
       _passwordController.text = "";
@@ -62,69 +63,67 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: ScrollablePage(
-          children: [
-            Container(
-                height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: AppSize.topMargin, bottom: AppSize.bottomMargin),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Image.asset("assets/images/logo.png", width: 200),
-                      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ScrollablePage(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height,
+              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: AppSize.topMargin, bottom: AppSize.bottomMargin),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Image.asset("assets/images/logo.png", width: 200),
                     ),
-                    const HeaderText("Sign In"),
-                    Container(
-                      margin: const EdgeInsets.only(top: 6, bottom: 17),
-                      child: const DescriptionText("Enter your email and password to login"),
+                  ),
+                  HeaderText(AppLocalizations.of(context)!.sign_in),
+                  Container(
+                    margin: const EdgeInsets.only(top: 6, bottom: 17),
+                    child: DescriptionText(AppLocalizations.of(context)!.sign_in_hint),
+                  ),
+                  PrimaryTextField(
+                    hint: AppLocalizations.of(context)!.email,
+                    controller: _emailController,
+                    action: TextInputAction.next,
+                    maxLength: 30,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 10),
+                    child: PasswordTextField(
+                      hint: AppLocalizations.of(context)!.password,
+                      controller: _passwordController,
+                      action: TextInputAction.done,
                     ),
-                    PrimaryTextField(
-                      hint: "Email",
-                      controller: _emailController,
-                      action: TextInputAction.next,
-                      maxLength: 30,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 10),
-                      child: PasswordTextField(
-                        hint: "Password",
-                        controller: _passwordController,
-                        action: TextInputAction.done,
-                      ),
-                    ),
+                  ),
 
-                    PrimaryButton(
-                      "Sign In",
-                      onPressed: () {
-                        _doLogin();
-                      },
+                  PrimaryButton(
+                    AppLocalizations.of(context)!.sign_in,
+                    onPressed: () {
+                      _doLogin();
+                    },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DescriptionText(AppLocalizations.of(context)!.login_question),
+                        ButtonText(
+                          AppLocalizations.of(context)!.sign_up,
+                          onPressed: () {
+                            NavigationUtils.put(context, const RegisterPage());
+                          },
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const DescriptionText("Don’t have an account?"),
-                          ButtonText(
-                            "Sign Up",
-                            onPressed: () {
-                              NavigationUtils.put(context, const RegisterPage());
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                )
-            )
-          ],
-        ),
+                  )
+                ],
+              )
+          )
+        ],
       ),
     );
   }

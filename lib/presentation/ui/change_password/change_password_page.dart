@@ -1,5 +1,6 @@
 import 'package:basqary/domain/api/profile.dart';
 import 'package:basqary/domain/data/user/request/PasswordChangeRequest.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
@@ -28,7 +29,7 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
   void _changeProfile() {
     if (_passwordController.text.isNotEmpty && _confPasswordController.text.isNotEmpty) {
       if (_passwordController.text != _confPasswordController.text) {
-        MessageHint.showMessage("Password mismatch");
+        MessageHint.showMessage(AppLocalizations.of(context)!.password_mismatch);
       } else {
         _profileAPI.changePassword(
           PasswordChangeRequest(
@@ -41,12 +42,12 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
   }
 
   void _success() {
-    MessageHint.showMessage("Saved");
+    MessageHint.showMessage(AppLocalizations.of(context)!.saved);
     Navigator.of(context).pop();
   }
 
   void _wrongOldPassword() {
-    MessageHint.showMessage("Wrong old password!");
+    MessageHint.showMessage(AppLocalizations.of(context)!.wrong_old_password);
   }
 
   @override
@@ -63,74 +64,72 @@ class _ChangePasswordPage extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              height: 35,
-              margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ButtonIcon(
-                    Icons.arrow_back_ios_new_rounded,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    color: Colors.black,
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 35,
+            margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ButtonIcon(
+                  Icons.arrow_back_ios_new_rounded,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  color: Colors.black,
+                ),
+                Expanded(
+                  child: HeaderText(
+                    AppLocalizations.of(context)!.change_password,
+                    textAlign: TextAlign.center,
                   ),
-                  const Expanded(
-                    child: HeaderText(
-                      "Change password",
-                      textAlign: TextAlign.center,
+                ),
+                Container(width: 35),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: 20),
+              child: Column(
+                children: [
+                  PasswordTextField(
+                    hint: AppLocalizations.of(context)!.old_password,
+                    controller: _oldPasswordController,
+                    action: TextInputAction.next,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: PasswordTextField(
+                      hint: AppLocalizations.of(context)!.password,
+                      controller: _passwordController,
+                      action: TextInputAction.next,
                     ),
                   ),
-                  Container(width: 35),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: PasswordTextField(
+                      hint: AppLocalizations.of(context)!.confirm_password,
+                      controller: _confPasswordController,
+                      action: TextInputAction.done,
+                    ),
+                  ),
                 ],
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: 20),
-                child: Column(
-                  children: [
-                    PasswordTextField(
-                      hint: "Old password",
-                      controller: _oldPasswordController,
-                      action: TextInputAction.next,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: PasswordTextField(
-                        hint: "Password",
-                        controller: _passwordController,
-                        action: TextInputAction.next,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: PasswordTextField(
-                        hint: "Confirm password",
-                        controller: _confPasswordController,
-                        action: TextInputAction.done,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
+            child: PrimaryButton(
+              AppLocalizations.of(context)!.save,
+              onPressed: () {
+                _changeProfile();
+              },
             ),
-            Container(
-              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, bottom: AppSize.bottomMargin),
-              child: PrimaryButton(
-                "Save",
-                onPressed: () {
-                  _changeProfile();
-                },
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

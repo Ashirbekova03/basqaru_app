@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/widget/description_text.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class AmountInputWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           DescriptionText(
-            "Enter amount",
+            AppLocalizations.of(context)!.enter_amount,
             textAlign: TextAlign.center,
             style: DescriptionText.defaultStyle.apply(
                 color: Colors.white

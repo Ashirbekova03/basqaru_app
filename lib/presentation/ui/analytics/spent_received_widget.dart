@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
 import 'package:basqary/presentation/ui/custom/formatter/formatter.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,9 @@ class SpentReceivedWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const Text(
-                  "Received",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.received,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontFamily: 'Inter',
@@ -72,9 +73,9 @@ class SpentReceivedWidget extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const Text(
-                  "Spent",
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.spent,
+                  style: const TextStyle(
                       color: AppColor.secondary,
                       fontSize: 12,
                       fontFamily: 'Inter',

@@ -1,4 +1,5 @@
 import 'package:basqary/domain/api/category.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/data/CategoryViewModel.dart';
 import 'package:basqary/presentation/ui/add_transaction/add_transaction_header_widget.dart';
 import 'package:basqary/presentation/ui/add_transaction/amount_input_widget.dart';
@@ -84,8 +85,8 @@ class _AddTransactionScreenWidget extends State<AddTransactionScreenWidget> {
                           onChanged: (isFirst) {
                             widget.onTypeChanged.call(isFirst);
                           },
-                          first: "Received",
-                          second: "Spent",
+                          first: AppLocalizations.of(context)!.received,
+                          second: AppLocalizations.of(context)!.spent,
                         )
                       ],
                     ),
@@ -104,7 +105,7 @@ class _AddTransactionScreenWidget extends State<AddTransactionScreenWidget> {
                       children: [
                         Expanded(
                           child: HeaderText(
-                            "Categories",
+                            AppLocalizations.of(context)!.categories,
                             style: HeaderText.smallerStyle,
                           ),
                         ),

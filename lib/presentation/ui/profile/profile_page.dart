@@ -1,5 +1,6 @@
 import 'package:basqary/domain/api/profile.dart';
 import 'package:basqary/domain/data/user/response/ProfileResponse.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/change_password/change_password_page.dart';
 import 'package:basqary/presentation/ui/change_profile/change_profile_page.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
@@ -104,7 +105,7 @@ class _ProfilePage extends State<ProfilePage> {
                   children: [
                     ProfileChangeButton(
                       title: _profile.fullName,
-                      description: "Click to change profile name",
+                      description: AppLocalizations.of(context)!.change_username_hint,
                       icon: Icons.person,
                       onClick: () {
                         NavigationUtils.pushResult(context, ChangeProfilePage(
@@ -114,7 +115,7 @@ class _ProfilePage extends State<ProfilePage> {
                     ),
                     ProfileChangeButton(
                       title: _profile.email,
-                      description: "Click to change email",
+                      description: AppLocalizations.of(context)!.change_email_hint,
                       icon: Icons.mail,
                       onClick: () {
                         NavigationUtils.pushResult(context, ChangeProfilePage(
@@ -123,22 +124,14 @@ class _ProfilePage extends State<ProfilePage> {
                       },
                     ),
                     ProfileChangeButton(
-                      title: "Change password",
-                      description: "Click to change password",
+                      title: AppLocalizations.of(context)!.change_password,
+                      description: AppLocalizations.of(context)!.change_password_hint,
                       icon: Icons.password,
                       onClick: () {
                         NavigationUtils.pushResult(
                             context, const ChangePasswordPage(),
                             () { _loadProfile(); }
                         );
-                      },
-                    ),
-                    ProfileChangeButton(
-                      title: "Privacy Policy",
-                      description: "Download file",
-                      icon: Icons.privacy_tip,
-                      onClick: () {
-
                       },
                     ),
                   ],

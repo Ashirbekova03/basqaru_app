@@ -1,6 +1,7 @@
 import 'package:basqary/domain/api/profile.dart';
 import 'package:basqary/domain/api/transactions.dart';
 import 'package:basqary/domain/data/user/response/ProfileResponse.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/data/CategoryViewModel.dart';
 import 'package:basqary/presentation/data/TransactionViewModel.dart';
 import 'package:basqary/presentation/ui/add_transaction/add_transaction_page.dart';
@@ -66,7 +67,7 @@ class _WalletPage extends State<WalletPage> {
           children: [
             Expanded(
               child: HeaderText(
-                "My transactions",
+                AppLocalizations.of(context)!.my_transactions,
                 style: HeaderText.smallerStyle,
               ),
             ),

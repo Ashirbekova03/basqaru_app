@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/analytics/analytics_header_widget.dart';
 import 'package:basqary/presentation/ui/analytics/spent_received_widget.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
@@ -82,7 +83,7 @@ class _AnalyticsScreenWidget extends State<AnalyticsScreenWidget> {
                       )
                   ),
                   child: HeaderText(
-                    "Transactions",
+                    AppLocalizations.of(context)!.analytics,
                     style: HeaderText.smallerStyle,
                   ),
                 ),

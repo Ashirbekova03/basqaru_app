@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
@@ -25,7 +26,7 @@ class AddTransactionHeaderWidget extends StatelessWidget {
           ),
           Expanded(
             child: HeaderText(
-              "Add transaction",
+              AppLocalizations.of(context)!.add_transactions,
               textAlign: TextAlign.center,
               style: HeaderText.defaultStyle.apply(
                   color: Colors.white

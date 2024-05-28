@@ -59,8 +59,7 @@ class _SplashPage extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: Image.asset(
@@ -68,7 +67,6 @@ class _SplashPage extends State<SplashPage> {
             height: 180,
           ),
         )
-      )
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/formatter/formatter.dart';
 import 'package:basqary/presentation/ui/custom/widget/description_text.dart';
 import 'package:basqary/presentation/ui/custom/widget/header_text.dart';
@@ -20,7 +21,7 @@ class AvailableBalanceWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           DescriptionText(
-            "Available balance",
+            AppLocalizations.of(context)!.available_balance,
             style: DescriptionText.defaultStyle.apply(
                 color: Colors.white
             ),

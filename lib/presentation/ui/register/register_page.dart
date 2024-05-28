@@ -1,5 +1,6 @@
 import 'package:basqary/domain/api/authorization.dart';
 import 'package:basqary/domain/data/user/request/RegisterRequest.dart';
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/navigation/navigation_utils.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_text.dart';
@@ -62,76 +63,74 @@ class _RegisterPage extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: ScrollablePage(
-          children: [
-            Container(
-                height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: AppSize.topMargin, bottom: AppSize.bottomMargin),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Image.asset("assets/images/logo.png", width: 200),
-                      ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ScrollablePage(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height,
+              padding: const EdgeInsets.only(left: AppSize.horizontal, right: AppSize.horizontal, top: AppSize.topMargin, bottom: AppSize.bottomMargin),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Image.asset("assets/images/logo.png", width: 200),
                     ),
-                    const HeaderText("Sign Up"),
-                    Container(
-                      margin: const EdgeInsets.only(top: 6, bottom: 17),
-                      child: const DescriptionText("Fill out the fields below to register"),
-                    ),
-                    PrimaryTextField(
-                      hint: "Username",
-                      controller: _usernameController,
+                  ),
+                  HeaderText(AppLocalizations.of(context)!.sign_up),
+                  Container(
+                    margin: const EdgeInsets.only(top: 6, bottom: 17),
+                    child: DescriptionText(AppLocalizations.of(context)!.sign_up_hint),
+                  ),
+                  PrimaryTextField(
+                    hint: AppLocalizations.of(context)!.username,
+                    controller: _usernameController,
+                    action: TextInputAction.next,
+                    keyboardType: TextInputType.name,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: PrimaryTextField(
+                      hint: AppLocalizations.of(context)!.email,
+                      controller: _emailController,
                       action: TextInputAction.next,
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: PrimaryTextField(
-                        hint: "Email",
-                        controller: _emailController,
-                        action: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 25),
-                      child: PasswordTextField(
-                        hint: "Password",
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 25),
+                    child: PasswordTextField(
+                        hint: AppLocalizations.of(context)!.password,
                         controller: _passwordController,
                         action: TextInputAction.done
-                      ),
                     ),
-                    PrimaryButton(
-                      "Sign Up",
-                      onPressed: () {
-                        _register();
-                      },
+                  ),
+                  PrimaryButton(
+                    AppLocalizations.of(context)!.sign_up,
+                    onPressed: () {
+                      _register();
+                    },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DescriptionText(AppLocalizations.of(context)!.register_question),
+                        ButtonText(
+                          AppLocalizations.of(context)!.sign_in,
+                          onPressed: () {
+                            NavigationUtils.put(context, const LoginPage());
+                          },
+                        )
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const DescriptionText("Have an account?"),
-                          ButtonText(
-                            "Sign In",
-                            onPressed: () {
-                              NavigationUtils.put(context, const LoginPage());
-                            },
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                )
-            )
-          ],
-        ),
+                  )
+                ],
+              )
+          )
+        ],
       ),
     );
   }

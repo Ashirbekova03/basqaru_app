@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/data/LessonViewModel.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
@@ -62,74 +63,72 @@ class _LessonPage extends State<LessonPage> {
         },
         player: YoutubePlayer(controller: _controller),
         builder: (context, player) {
-          return MaterialApp(
-            home: Scaffold(
-              body: ScrollablePage(
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              "assets/images/top.png",
-                              height: 120,
-                              width: double.infinity,
-                              alignment: Alignment.topCenter,
-                              fit: BoxFit.cover,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 110),
-                              child: player,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
-                              height: 35,
-                              child: Row(
-                                children: [
-                                  ButtonIcon(
-                                    Icons.arrow_back_ios_new_rounded,
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: const EdgeInsets.only(right: 35),
-                                      child: HeaderText(
-                                        "Lesson",
-                                        textAlign: TextAlign.center,
-                                        style: HeaderText.defaultStyle.apply(
-                                            color: Colors.white
-                                        ),
+          return Scaffold(
+            body: ScrollablePage(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      child: Stack(
+                        children: [
+                          Image.asset(
+                            "assets/images/top.png",
+                            height: 120,
+                            width: double.infinity,
+                            alignment: Alignment.topCenter,
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 110),
+                            child: player,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: AppSize.topMargin, left: AppSize.horizontal, right: AppSize.horizontal),
+                            height: 35,
+                            child: Row(
+                              children: [
+                                ButtonIcon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 35),
+                                    child: HeaderText(
+                                      AppLocalizations.of(context)!.lesson,
+                                      textAlign: TextAlign.center,
+                                      style: HeaderText.defaultStyle.apply(
+                                          color: Colors.white
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 20),
-                    child: HeaderText(
-                      widget.lesson.title
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 14, right: 14, top: 6),
-                    child: DescriptionText(
-                      widget.lesson.description,
-                      style: DescriptionText.defaultStyle.apply(
-                        color: Colors.black.withOpacity(0.9),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
+                    )
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 20),
+                  child: HeaderText(
+                      widget.lesson.title
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 6),
+                  child: DescriptionText(
+                    widget.lesson.description,
+                    style: DescriptionText.defaultStyle.apply(
+                      color: Colors.black.withOpacity(0.9),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

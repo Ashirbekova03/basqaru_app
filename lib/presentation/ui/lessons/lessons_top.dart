@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
 import 'package:basqary/presentation/ui/custom/widget/description_text.dart';
@@ -37,28 +38,22 @@ class LessonsTopWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(width: 35),
                   Expanded(
                     child: HeaderText(
-                      "Useful tips",
+                      AppLocalizations.of(context)!.tips,
                       textAlign: TextAlign.center,
                       style: HeaderText.defaultStyle.apply(
                           color: Colors.white
                       ),
                     ),
                   ),
-                  ButtonIcon(
-                      Icons.notifications,
-                      onPressed: () {
-
-                      }
-                  )
                 ],
               ),
               Container(
                 margin: const EdgeInsets.only(top: 2),
                 child: DescriptionText(
-                  "Get useful advice and grow with us",
+                  textAlign: TextAlign.center,
+                  AppLocalizations.of(context)!.tips_hint,
                   style: DescriptionText.defaultStyle.apply(
                       color: Colors.white.withOpacity(0.9)
                   ),
@@ -68,7 +63,7 @@ class LessonsTopWidget extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 17),
                 child: SearchTextField(
                   controller: searchController,
-                  hint: "Search",
+                  hint: AppLocalizations.of(context)!.search,
                   onSubmitted: onSubmitted,
                 ),
               )

@@ -1,3 +1,4 @@
+import 'package:basqary/l10n/app_localizations.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_color.dart';
 import 'package:basqary/presentation/ui/custom/constant/app_size.dart';
 import 'package:basqary/presentation/ui/custom/widget/button_icon.dart';
@@ -22,7 +23,19 @@ class AnalyticsHeaderWidget extends StatefulWidget {
 class _AnalyticsHeaderWidget extends State<AnalyticsHeaderWidget> {
 
   int _selectedTypeIndex = 0;
-  final List<String> _typeValues = ["Week", "Month", "Year"];
+  final List<String> _typeValues = [];
+
+  @override
+  void initState() {
+    _typeValues.addAll(
+        [
+          "Week",
+          "Month",
+          "Year"
+        ]
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,7 @@ class _AnalyticsHeaderWidget extends State<AnalyticsHeaderWidget> {
           Container(
             alignment: Alignment.center,
             child: HeaderText(
-              "Analytics",
+              AppLocalizations.of(context)!.categories,
               textAlign: TextAlign.center,
               style: HeaderText.defaultStyle.apply(
                   color: Colors.white
@@ -84,12 +97,6 @@ class _AnalyticsHeaderWidget extends State<AnalyticsHeaderWidget> {
                 ),
               ),
               Expanded(child: Container()),
-              ButtonIcon(
-                  Icons.notifications,
-                  onPressed: () {
-
-                  }
-              )
             ],
           )
         ],
